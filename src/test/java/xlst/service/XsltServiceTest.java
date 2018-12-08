@@ -31,8 +31,7 @@ public class XsltServiceTest extends AbstractTest {
 
   @Test
   public void testProcess() {
-    boolean processed = process();
-    assertTrue(processed);
+    process();
   }
 
   @Test
@@ -49,12 +48,12 @@ public class XsltServiceTest extends AbstractTest {
     }
   }
 
-  private boolean process() {
+  private void process() {
     File copyFile = null;
     try {
       copyFile = File.createTempFile("test-input", ".xml");
       FileUtils.copyFile(getResource("/transform/original_order.xml"), copyFile);
-      return xsltService.process(copyFile);
+      xsltService.process(copyFile);
     } catch (IOException e) {
       throw new RuntimeException(e);
     } finally {

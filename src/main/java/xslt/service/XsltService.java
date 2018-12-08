@@ -24,16 +24,14 @@ public class XsltService {
   @Autowired
   private XsltTransformService xsltTransformService;
 
-  public boolean process(File inputXmlFile) {
+  public void process(File inputXmlFile) {
     try {
       String inputXml = FileUtils.readFileToString(inputXmlFile, "UTF-8");
       String outputXml = xsltTransformService.transform(inputXml);
       save(inputXmlFile.getName(), inputXml, outputXml);
       FileUtils.deleteQuietly(inputXmlFile);
-      return true;
     } catch (Exception e) {
       LOGGER.warn("XML file {} transforming error: {}", inputXmlFile.getName(), e);
-      return false;
     }
   }
 
