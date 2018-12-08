@@ -12,6 +12,7 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -34,14 +35,16 @@ public class XmlSourcesWatchService {
   private class Worker implements Runnable {
     private final WatchService watchService;
     private final File xmlSourcesDirectory;
+    private final ExecutorService executorService;
 
     Worker(String xmlSourcesDirectoryPath) throws Exception {
+      this.watchService = FileSystems.getDefault().newWatchService();
       this.xmlSourcesDirectory = new File(xmlSourcesDirectoryPath);
       if (!xmlSourcesDirectory.isDirectory()) {
         throw new RuntimeException(xmlSourcesDirectoryPath + " is not a directory");
       }
-      this.watchService = FileSystems.getDefault().newWatchService();
       xmlSourcesDirectory.toPath().register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+      executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
     @Override
@@ -50,7 +53,7 @@ public class XmlSourcesWatchService {
       try {
         while ((key = watchService.take()) != null) {
           for (WatchEvent<?> event : key.pollEvents()) {
-            xsltService.process(FileUtils.getFile(xmlSourcesDirectory, ((WatchEvent<Path>)event).context().toString()));
+            executorService.execute(() -> xsltService.process(FileUtils.getFile(xmlSourcesDirectory, ((WatchEvent<Path>)event).context().toString())));
           }
           key.reset();
         }
