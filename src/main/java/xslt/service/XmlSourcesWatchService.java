@@ -1,5 +1,6 @@
 package xslt.service;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,7 @@ public class XmlSourcesWatchService {
         throw new RuntimeException(xmlSourcesDirectoryPath + " is not a directory");
       }
       this.watchService = FileSystems.getDefault().newWatchService();
-      xmlSourcesDirectory.toPath().register(
-              watchService,
-              StandardWatchEventKinds.ENTRY_CREATE,
-              StandardWatchEventKinds.ENTRY_MODIFY
-      );
+      xmlSourcesDirectory.toPath().register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
     }
 
     @Override
@@ -53,7 +50,7 @@ public class XmlSourcesWatchService {
       try {
         while ((key = watchService.take()) != null) {
           for (WatchEvent<?> event : key.pollEvents()) {
-            xsltService.process(((WatchEvent<Path>) event).context().toFile());
+            xsltService.process(FileUtils.getFile(xmlSourcesDirectory, ((WatchEvent<Path>)event).context().toString()));
           }
           key.reset();
         }
