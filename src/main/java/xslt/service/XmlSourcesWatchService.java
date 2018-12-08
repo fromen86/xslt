@@ -63,8 +63,8 @@ public class XmlSourcesWatchService {
     Worker(String xmlSourcesDirectoryPath) throws Exception {
       this.watchService = FileSystems.getDefault().newWatchService();
       this.xmlSourcesDirectory = new File(xmlSourcesDirectoryPath);
-      if (!xmlSourcesDirectory.mkdir()) {
-        throw new RuntimeException("Directory creating failed: " + xmlSourcesDirectoryPath);
+      if ((!xmlSourcesDirectory.exists() && !xmlSourcesDirectory.mkdirs()) || !xmlSourcesDirectory.isDirectory()) {
+        throw new RuntimeException("Wrong directory: " + xmlSourcesDirectoryPath);
       }
       xmlSourcesDirectory.toPath().register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
       executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
