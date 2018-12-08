@@ -14,6 +14,7 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 /**
  * @author makhramovich
@@ -49,11 +50,16 @@ public class XmlSourcesWatchService {
 
     @Override
     public void run() {
+      File[] files = xmlSourcesDirectory.listFiles();
+      if (files != null) {
+        Stream.of(files).forEach(file -> executorService.execute(() -> xsltService.process(file)));
+      }
+
       WatchKey key;
       try {
         while ((key = watchService.take()) != null) {
           for (WatchEvent<?> event : key.pollEvents()) {
-            executorService.execute(() -> xsltService.process(FileUtils.getFile(xmlSourcesDirectory, ((WatchEvent<Path>)event).context().toString())));
+            executorService.execute(() -> xsltService.process(FileUtils.getFile(xmlSourcesDirectory, ((WatchEvent<Path>) event).context().toString())));
           }
           key.reset();
         }
