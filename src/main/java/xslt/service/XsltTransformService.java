@@ -34,6 +34,9 @@ public class XsltTransformService {
   @Value("${xsl.transform.indent}")
   private Integer indent;
 
+  /**
+   * Init.
+   */
   @PostConstruct
   public void init() {
     try {
@@ -46,6 +49,14 @@ public class XsltTransformService {
     }
   }
 
+  /**
+   * Transform XML.
+   *
+   * @param inputXml the input XML
+   * @return the string
+   * @throws TransformerException the transformer exception
+   * @throws IOException          the IO exception
+   */
   public String transform(String inputXml) throws TransformerException, IOException {
     try (Reader inputReader = new StringReader(inputXml);
          ByteArrayOutputStream os = new ByteArrayOutputStream()) {

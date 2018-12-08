@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
+ * XML repository test.
+ *
  * @author makhramovich
  */
 @RunWith(SpringJUnit4ClassRunner.class)

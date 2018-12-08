@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * A service for XML processing.
+ *
  * @author makhramovich
  */
 @Service
@@ -23,6 +25,11 @@ public class XsltService {
   @Autowired
   private XsltTransformService xsltTransformService;
 
+  /**
+   * Process XML with current XSLT.
+   *
+   * @param inputXmlFile the input XML file
+   */
   public void process(File inputXmlFile) {
     try {
       String inputXml = FileUtils.readFileToString(inputXmlFile, "UTF-8");
@@ -34,14 +41,31 @@ public class XsltService {
     }
   }
 
+  /**
+   * Find all XMLs that has been processed.
+   *
+   * @return the list
+   */
   public List<Xml> findAll() {
     return xmlRepository.findAll();
   }
 
+  /**
+   * Gets source XML by id.
+   *
+   * @param id the id
+   * @return the source XML
+   */
   public String getSource(Long id) {
     return xmlRepository.getSource(id);
   }
 
+  /**
+   * Gets transformed XML by id.
+   *
+   * @param id the id
+   * @return the transformed XML
+   */
   public String getTransformed(Long id) {
     return xmlRepository.getTransformed(id);
   }

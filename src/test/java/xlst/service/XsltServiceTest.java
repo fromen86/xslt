@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * XML service test.
  * @author makhramovich
  */
 public class XsltServiceTest extends AbstractTest {

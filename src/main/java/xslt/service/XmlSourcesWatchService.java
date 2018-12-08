@@ -20,6 +20,8 @@ import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
 /**
+ * A service to watch XML source directory to process new files.
+ *
  * @author makhramovich
  */
 @Service
@@ -31,6 +33,9 @@ public class XmlSourcesWatchService {
   @Value("${xml.directory}")
   private String xmlSourcesDirectoryPath;
 
+  /**
+   * Init.
+   */
   @PostConstruct
   public void init() {
     try {
@@ -49,6 +54,12 @@ public class XmlSourcesWatchService {
     private final File xmlSourcesDirectory;
     private final ExecutorService executorService;
 
+    /**
+     * Instantiates a new Worker that receives new XML files and start processing.
+     *
+     * @param xmlSourcesDirectoryPath the XML sources directory path
+     * @throws Exception the exception
+     */
     Worker(String xmlSourcesDirectoryPath) throws Exception {
       this.watchService = FileSystems.getDefault().newWatchService();
       this.xmlSourcesDirectory = new File(xmlSourcesDirectoryPath);

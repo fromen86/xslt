@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
+ * The Xml entity.
+ *
  * @author makhramovich
  */
 @Entity

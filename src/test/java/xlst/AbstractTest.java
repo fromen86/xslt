@@ -9,6 +9,8 @@ import xslt.XsltApplication;
 import java.io.File;
 
 /**
+ * A parent test.
+ *
  * @author makhramovich
  */
 @RunWith(SpringJUnit4ClassRunner.class)

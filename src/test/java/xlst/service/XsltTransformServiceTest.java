@@ -15,6 +15,8 @@ import java.io.StringReader;
 import java.util.Collections;
 
 /**
+ * XML transform test.
+ *
  * @author makhramovich
  */
 public class XsltTransformServiceTest extends AbstractTest {
