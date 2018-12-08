@@ -1,18 +1,34 @@
 package xslt.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 
 /**
  * @author makhramovich
  */
-@Embeddable
+@Entity
+@Table(name = "xml_link")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Xml {
-  private String content;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  private String sourceFileName;
+
+  @Lob
+  @Basic(fetch = FetchType.LAZY)
+  private String sourceXml;
+
+  @Lob
+  @Basic(fetch = FetchType.LAZY)
+  private String transformedXml;
 }

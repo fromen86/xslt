@@ -10,7 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xlst.AbstractTest;
 import xslt.XsltApplication;
-import xslt.entity.XmlLink;
+import xslt.entity.Xml;
 import xslt.repository.XmlLinkRepository;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.io.IOException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = XsltApplication.class)
 @TestPropertySource(locations = "classpath:test.properties")
-public class XmlLinkRepositoryTest extends AbstractTest {
+public class XmlRepositoryTest extends AbstractTest {
   @Autowired
   private XmlLinkRepository xmlLinkRepository;
 
@@ -36,12 +36,12 @@ public class XmlLinkRepositoryTest extends AbstractTest {
 
   @Test
   public void testSave() {
-    XmlLink xmlLink = new XmlLink();
-    xmlLink.setSourceFileName("original_order.xml");
-    xmlLink.setSourceXml(inputXmlContent);
-    xmlLink.setTransformedXml(outputXmlContent);
-    xmlLink = xmlLinkRepository.save(xmlLink);
+    Xml xml = new Xml();
+    xml.setSourceFileName("original_order.xml");
+    xml.setSourceXml(inputXmlContent);
+    xml.setTransformedXml(outputXmlContent);
+    xml = xmlLinkRepository.save(xml);
 
-    System.out.println(xmlLink.getId());
+    System.out.println(xml.getId());
   }
 }

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xslt.entity.XmlLink;
+import xslt.entity.Xml;
 import xslt.repository.XmlLinkRepository;
 
 import java.io.File;
@@ -38,14 +38,14 @@ public class XsltService {
 
   @Transactional
   void save(String fileName, String inputXml, String outputXml) {
-    XmlLink xmlLink = new XmlLink();
-    xmlLink.setSourceFileName(fileName);
-    xmlLink.setSourceXml(inputXml);
-    xmlLink.setTransformedXml(outputXml);
-    xmlLinkRepository.save(xmlLink);
+    Xml xml = new Xml();
+    xml.setSourceFileName(fileName);
+    xml.setSourceXml(inputXml);
+    xml.setTransformedXml(outputXml);
+    xmlLinkRepository.save(xml);
   }
 
-  public List<XmlLink> findAll() {
+  public List<Xml> findAll() {
     return xmlLinkRepository.findAll();
   }
 

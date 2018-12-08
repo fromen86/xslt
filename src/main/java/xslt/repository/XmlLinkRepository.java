@@ -1,10 +1,10 @@
 package xslt.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import xslt.entity.XmlLink;
+import xslt.entity.Xml;
 
 /**
  * @author makhramovich
  */
-public interface XmlLinkRepository extends JpaRepository<XmlLink, Long> {
+public interface XmlLinkRepository extends JpaRepository<Xml, Long> {
 }
