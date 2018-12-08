@@ -18,11 +18,11 @@ import java.io.File;
  * @author makhramovich
  */
 @Component
-public class XslTransformService {
+public class XsltTransformService {
   private final Templates templates;
   private final Integer indent;
 
-  public XslTransformService(String xslTemplate, Integer indent) {
+  public XsltTransformService(String xslTemplate, Integer indent) {
     try {
       templates = TransformerFactory.newInstance().newTemplates(new StreamSource(xslTemplate));
     } catch (TransformerConfigurationException e) {

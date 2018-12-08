@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xslt.XsltApplication;
-import xslt.transform.XslTransformService;
+import xslt.transform.XsltTransformService;
 
 import javax.xml.transform.TransformerException;
 import java.io.File;
@@ -21,9 +21,9 @@ import java.io.IOException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = XsltApplication.class)
 @TestPropertySource(locations="classpath:test.properties")
-public class XslTransformServiceTest {
+public class XsltTransformServiceTest {
   @Autowired
-  private XslTransformService transformService;
+  private XsltTransformService transformService;
 
   @Test
   public void testTransform() throws IOException, TransformerException {

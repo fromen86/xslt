@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import xslt.transform.XslTransformService;
+import xslt.transform.XsltTransformService;
 
 /**
  * @author makhramovich
@@ -12,9 +12,9 @@ import xslt.transform.XslTransformService;
 @SpringBootApplication
 public class XsltApplication {
   @Bean
-  public XslTransformService xslTransformService(@Value("${xsl.transform.template}") String xslTemplate,
-                                                 @Value("${xsl.transform.indent}") Integer indent) {
-    return new XslTransformService(xslTemplate, indent);
+  public XsltTransformService xslTransformService(@Value("${xsl.transform.template}") String xslTemplate,
+                                                  @Value("${xsl.transform.indent}") Integer indent) {
+    return new XsltTransformService(xslTemplate, indent);
   }
 
   public static void main(String[] args) {
