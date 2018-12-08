@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import xslt.entity.Xml;
 import xslt.repository.XmlRepository;
 
@@ -28,16 +27,11 @@ public class XsltService {
     try {
       String inputXml = FileUtils.readFileToString(inputXmlFile, "UTF-8");
       String outputXml = xsltTransformService.transform(inputXml);
-      save(inputXmlFile.getName(), inputXml, outputXml);
+      xmlRepository.save(new Xml(null, inputXmlFile.getName(), new Date(), inputXml, outputXml));
       FileUtils.deleteQuietly(inputXmlFile);
     } catch (Exception e) {
       LOGGER.warn("XML file {} transforming error: {}", inputXmlFile.getName(), e);
     }
-  }
-
-  @Transactional
-  void save(String fileName, String inputXml, String outputXml) {
-    xmlRepository.save(new Xml(null, fileName, new Date(), inputXml, outputXml));
   }
 
   public List<Xml> findAll() {
