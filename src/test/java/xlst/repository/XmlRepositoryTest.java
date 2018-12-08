@@ -14,6 +14,7 @@ import xslt.entity.Xml;
 import xslt.repository.XmlRepository;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author makhramovich
@@ -25,21 +26,17 @@ public class XmlRepositoryTest extends AbstractTest {
   @Autowired
   private XmlRepository xmlRepository;
 
-  private String inputXmlContent;
-  private String outputXmlContent;
+  private String inputXml;
+  private String outputXml;
 
   @Before
   public void before() throws IOException {
-    inputXmlContent = FileUtils.readFileToString(getResource("/transform/original_order.xml"), "UTF-8");
-    outputXmlContent = FileUtils.readFileToString(getResource("/transform/transformed.xml"), "UTF-8");
+    inputXml = FileUtils.readFileToString(getResource("/transform/original_order.xml"), "UTF-8");
+    outputXml = FileUtils.readFileToString(getResource("/transform/transformed.xml"), "UTF-8");
   }
 
   @Test
   public void testSave() {
-    Xml xml = new Xml();
-    xml.setSourceFileName("original_order.xml");
-    xml.setSourceXml(inputXmlContent);
-    xml.setTransformedXml(outputXmlContent);
-    xmlRepository.save(xml);
+    xmlRepository.save(new Xml(null, "original_order.xml", new Date(), inputXml, outputXml));
   }
 }

@@ -10,6 +10,7 @@ import xslt.entity.Xml;
 import xslt.repository.XmlRepository;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,11 +39,7 @@ public class XsltService {
 
   @Transactional
   void save(String fileName, String inputXml, String outputXml) {
-    Xml xml = new Xml();
-    xml.setSourceFileName(fileName);
-    xml.setSourceXml(inputXml);
-    xml.setTransformedXml(outputXml);
-    xmlRepository.save(xml);
+    xmlRepository.save(new Xml(null, fileName, new Date(), inputXml, outputXml));
   }
 
   public List<Xml> findAll() {
