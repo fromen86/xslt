@@ -1,6 +1,4 @@
-package xslt.transform;
-
-import org.springframework.stereotype.Component;
+package xslt.service;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Templates;
@@ -10,14 +8,19 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.File;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.nio.charset.Charset;
 
 /**
  * This class transforms {@code XML -> XML} with {@code XSL} template.
  *
  * @author makhramovich
  */
-@Component
 public class XsltTransformService {
   private final Templates templates;
   private final Integer indent;
@@ -34,8 +37,12 @@ public class XsltTransformService {
     this.indent = indent;
   }
 
-  public void transform(File inputXml, File outputXml) throws TransformerException {
-    createTransformer().transform(new StreamSource(inputXml), new StreamResult(outputXml));
+  public String transform(String inputXml) throws TransformerException, IOException {
+    try (Reader inputReader = new StringReader(inputXml);
+         ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+      createTransformer().transform(new StreamSource(new BufferedReader(inputReader)), new StreamResult(new BufferedOutputStream(os)));
+      return new String(os.toByteArray(), Charset.forName("UTF-8")).trim();
+    }
   }
 
   private Transformer createTransformer() throws TransformerConfigurationException {
