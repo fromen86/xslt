@@ -6,10 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xslt.entity.Xml;
 import xslt.entity.XmlLink;
 import xslt.repository.XmlLinkRepository;
-import xslt.repository.XmlRepository;
 
 import java.io.File;
 import java.util.List;
@@ -20,9 +18,6 @@ import java.util.List;
 @Service
 public class XsltService {
   private static final Logger LOGGER = LoggerFactory.getLogger(XsltService.class);
-
-  @Autowired
-  private XmlRepository xmlRepository;
   @Autowired
   private XmlLinkRepository xmlLinkRepository;
   @Autowired
@@ -42,15 +37,7 @@ public class XsltService {
   }
 
   @Transactional
-  void save(String fileName, String inputContent, String outputContent) {
-    Xml inputXml = new Xml();
-    inputXml.setContent(inputContent);
-    inputXml = xmlRepository.save(inputXml);
-
-    Xml outputXml = new Xml();
-    outputXml.setContent(outputContent);
-    outputXml = xmlRepository.save(outputXml);
-
+  void save(String fileName, String inputXml, String outputXml) {
     XmlLink xmlLink = new XmlLink();
     xmlLink.setSourceFileName(fileName);
     xmlLink.setSourceXml(inputXml);
@@ -63,10 +50,10 @@ public class XsltService {
   }
 
   public String getSource(Long id) {
-    return xmlLinkRepository.getOne(id).getSourceXml().getContent();
+    return xmlLinkRepository.getOne(id).getSourceXml();
   }
 
   public String getTransformed(Long id) {
-    return xmlLinkRepository.getOne(id).getTransformedXml().getContent();
+    return xmlLinkRepository.getOne(id).getTransformedXml();
   }
 }

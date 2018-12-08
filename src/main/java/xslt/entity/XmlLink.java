@@ -2,16 +2,14 @@ package xslt.entity;
 
 import lombok.Data;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.Lob;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 /**
  * @author makhramovich
@@ -19,18 +17,18 @@ import java.io.Serializable;
 @Entity
 @Table(name = "xml_link")
 @Data
-public class XmlLink implements Serializable {
+public class XmlLink {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   private String sourceFileName;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "source_xml_id")
-  private Xml sourceXml;
+  @Lob
+  @Basic(fetch = FetchType.LAZY)
+  private String sourceXml;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "transformed_xml_id")
-  private Xml transformedXml;
+  @Lob
+  @Basic(fetch = FetchType.LAZY)
+  private String transformedXml;
 }
