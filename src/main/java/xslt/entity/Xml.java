@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @author makhramovich
  */
 @Entity
-@Table(name = "xml_link")
+@Table(name = "xml")
 @Data
 public class Xml {
   @Id

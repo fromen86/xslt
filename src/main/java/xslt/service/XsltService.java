@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xslt.entity.Xml;
-import xslt.repository.XmlLinkRepository;
+import xslt.repository.XmlRepository;
 
 import java.io.File;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class XsltService {
   private static final Logger LOGGER = LoggerFactory.getLogger(XsltService.class);
   @Autowired
-  private XmlLinkRepository xmlLinkRepository;
+  private XmlRepository xmlRepository;
   @Autowired
   private XsltTransformService xsltTransformService;
 
@@ -42,18 +42,18 @@ public class XsltService {
     xml.setSourceFileName(fileName);
     xml.setSourceXml(inputXml);
     xml.setTransformedXml(outputXml);
-    xmlLinkRepository.save(xml);
+    xmlRepository.save(xml);
   }
 
   public List<Xml> findAll() {
-    return xmlLinkRepository.findAll();
+    return xmlRepository.findAll();
   }
 
   public String getSource(Long id) {
-    return xmlLinkRepository.getOne(id).getSourceXml();
+    return xmlRepository.getOne(id).getSourceXml();
   }
 
   public String getTransformed(Long id) {
-    return xmlLinkRepository.getOne(id).getTransformedXml();
+    return xmlRepository.getOne(id).getTransformedXml();
   }
 }
