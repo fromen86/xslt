@@ -49,7 +49,6 @@ public class XsltTransformService {
     // TODO UTF-8, last empty line
     Transformer transformer = templates.newTransformer();
     transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-    transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
     transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", String.valueOf(indent));
     return transformer;
   }
