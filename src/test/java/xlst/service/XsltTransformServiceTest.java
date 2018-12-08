@@ -2,10 +2,8 @@ package xlst.service;
 
 import org.apache.commons.io.FileUtils;
 import static org.junit.Assert.assertFalse;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.xmlunit.diff.Diff;
 import xlst.AbstractTest;
 import xslt.service.XsltTransformService;
@@ -19,14 +17,9 @@ import java.util.Collections;
 /**
  * @author makhramovich
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 public class XsltTransformServiceTest extends AbstractTest {
+  @Autowired
   private XsltTransformService transformService;
-
-  @Before
-  public void before(){
-    transformService = new XsltTransformService(getResource("/transform/idoc2order.xsl").getPath(), 3);
-  }
 
   @Test
   public void testTransform() throws IOException, TransformerException {

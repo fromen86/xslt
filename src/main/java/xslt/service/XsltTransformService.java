@@ -1,5 +1,9 @@
 package xslt.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
@@ -21,11 +25,17 @@ import java.nio.charset.Charset;
  *
  * @author makhramovich
  */
+@Service
 public class XsltTransformService {
-  private final Templates templates;
-  private final Integer indent;
+  private Templates templates;
 
-  public XsltTransformService(String xslTemplate, Integer indent) {
+  @Value("${xsl.transform.template}")
+  private String xslTemplate;
+  @Value("${xsl.transform.indent}")
+  private Integer indent;
+
+  @PostConstruct
+  public void init() {
     try {
       templates = TransformerFactory.newInstance().newTemplates(new StreamSource(xslTemplate));
     } catch (TransformerConfigurationException e) {
@@ -34,7 +44,6 @@ public class XsltTransformService {
     if (indent == null || indent < 0) {
       throw new IllegalArgumentException("Wrong indent value " + indent);
     }
-    this.indent = indent;
   }
 
   public String transform(String inputXml) throws TransformerException, IOException {
