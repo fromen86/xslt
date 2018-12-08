@@ -38,11 +38,11 @@ public class Xml {
   @Lob
   @Basic(fetch = FetchType.LAZY)
   @JsonIgnore
-  private String sourceXml;
+  private String source;
 
   @NotNull
   @Lob
   @Basic(fetch = FetchType.LAZY)
   @JsonIgnore
-  private String transformedXml;
+  private String transformed;
 }

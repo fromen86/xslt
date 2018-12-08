@@ -47,10 +47,10 @@ public class XsltService {
   }
 
   public String getSource(Long id) {
-    return xmlRepository.getOne(id).getSourceXml();
+    return xmlRepository.getSource(id);
   }
 
   public String getTransformed(Long id) {
-    return xmlRepository.getOne(id).getTransformedXml();
+    return xmlRepository.getTransformed(id);
   }
 }
