@@ -40,8 +40,6 @@ public class XmlRepositoryTest extends AbstractTest {
     xml.setSourceFileName("original_order.xml");
     xml.setSourceXml(inputXmlContent);
     xml.setTransformedXml(outputXmlContent);
-    xml = xmlRepository.save(xml);
-
-    System.out.println(xml.getId());
+    xmlRepository.save(xml);
   }
 }
