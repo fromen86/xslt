@@ -4,7 +4,10 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -19,18 +22,26 @@ import java.util.stream.Stream;
 /**
  * @author makhramovich
  */
+@Service
 public class XmlSourcesWatchService {
   private static final Logger LOGGER = LoggerFactory.getLogger(XmlSourcesWatchService.class);
 
   @Autowired
   private XsltService xsltService;
+  @Value("${xml.directory}")
+  private String xmlSourcesDirectoryPath;
 
-  public XmlSourcesWatchService(String xmlSourcesDirectoryPath) throws Exception {
-    Executors.newSingleThreadExecutor(r -> {
-      Thread t = Executors.defaultThreadFactory().newThread(r);
-      t.setDaemon(true);
-      return t;
-    }).execute(new Worker(xmlSourcesDirectoryPath));
+  @PostConstruct
+  public void init() {
+    try {
+      Executors.newSingleThreadExecutor(r -> {
+        Thread t = Executors.defaultThreadFactory().newThread(r);
+        t.setDaemon(true);
+        return t;
+      }).execute(new Worker(xmlSourcesDirectoryPath));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private class Worker implements Runnable {
