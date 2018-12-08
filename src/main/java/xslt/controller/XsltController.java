@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xslt.entity.Xml;
+import xslt.exception.NotFoundException;
 import xslt.service.XsltService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author makhramovich
@@ -26,11 +28,11 @@ public class XsltController {
 
   @GetMapping("source/{id}")
   public String getSource(@PathVariable Long id) {
-    return xsltService.getSource(id);
+    return Optional.ofNullable(xsltService.getSource(id)).orElseThrow(NotFoundException::new);
   }
 
   @GetMapping("transformed/{id}")
   public String getTransformed(@PathVariable Long id) {
-    return xsltService.getTransformed(id);
+    return Optional.ofNullable(xsltService.getTransformed(id)).orElseThrow(NotFoundException::new);
   }
 }
