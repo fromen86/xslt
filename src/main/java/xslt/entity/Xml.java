@@ -1,5 +1,6 @@
 package xslt.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Basic;
@@ -26,9 +27,11 @@ public class Xml {
 
   @Lob
   @Basic(fetch = FetchType.LAZY)
+  @JsonIgnore
   private String sourceXml;
 
   @Lob
   @Basic(fetch = FetchType.LAZY)
+  @JsonIgnore
   private String transformedXml;
 }
